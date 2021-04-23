@@ -1,0 +1,1 @@
+A ClickHouse ODBC connector. This requires the ClickHouse ODBC driver.
