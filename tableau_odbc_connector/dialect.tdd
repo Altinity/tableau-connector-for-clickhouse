@@ -2,7 +2,7 @@
 
 <dialect name='ClickHouse'
          class='clickhouse_odbc'
-         version='19.1'>
+         version='18.1'>
   <function-map>
     <function group='numeric' name='ABS' return-type='real'>
       <formula>ABS(%1)</formula>
@@ -1889,6 +1889,63 @@ END</formula>
       <argument type='date' />
     </date-function>
   </function-map>
+
+  <!--
+    supported-aggregations
+    Comprehensive list of supported aggregations and date truncations
+  -->
+  <supported-aggregations>
+    <aggregation value='AGG_COUNT'/>
+    <aggregation value='AGG_COUNTD'/>
+    <aggregation value='AGG_SUM'/>
+    <aggregation value='AGG_AVG'/>
+    <aggregation value='AGG_MIN'/>
+    <aggregation value='AGG_MAX'/>
+    <aggregation value='AGG_STDEV'/>
+    <aggregation value='AGG_STDEVP'/>
+    <aggregation value='AGG_VAR'/>
+    <aggregation value='AGG_VARP'/>
+    <aggregation value='AGG_COVAR'/>
+    <aggregation value='AGG_COVARP'/>
+    <aggregation value='AGG_CORR'/>
+    <aggregation value='AGG_SUM_XSQR'/>
+    <aggregation value='AGG_COLLECT'/>
+    <aggregation value='AGG_ATTR'/>
+<!--<aggregation value='AGG_MEDIAN'/>
+    <aggregation value='AGG_PERCENTILE'/>
+    <aggregation value='AGG_QUART1'/>
+    <aggregation value='AGG_QUART3'/>
+    <aggregation value='AGG_SKEWNESS'/>
+    <aggregation value='AGG_KURTOSIS'/>
+    <aggregation value='AGG_INOUT'/>
+    <aggregation value='AGG_SUM_XSQR'/>
+    <aggregation value='AGG_USER'/>
+    <aggregation value='AGG_COLLECT'/>
+    <aggregation value='AGG_COVAR'/>
+    <aggregation value='AGG_COVARP'/>
+    <aggregation value='AGG_CORR'/>-->
+
+    <aggregation value='AGG_YEAR'/>
+    <aggregation value='AGG_QTR'/>
+    <aggregation value='AGG_MONTH'/>
+    <aggregation value='AGG_DAY'/>
+    <aggregation value='AGG_WEEK'/>
+    <aggregation value='AGG_WEEKDAY'/>
+    <aggregation value='AGG_MONTHYEAR'/>
+    <aggregation value='AGG_MDY'/>
+    <aggregation value='AGG_HOUR'/>
+    <aggregation value='AGG_MINUTE'/>
+    <aggregation value='AGG_SECOND'/>
+
+    <aggregation value='TRUNC_YEAR'/>
+    <aggregation value='TRUNC_QTR'/>
+    <aggregation value='TRUNC_MONTH'/>
+    <aggregation value='TRUNC_DAY'/>
+    <aggregation value='TRUNC_WEEK'/>
+    <aggregation value='TRUNC_HOUR'/>
+    <aggregation value='TRUNC_MINUTE'/>
+    <aggregation value='TRUNC_SECOND'/>
+  </supported-aggregations>
 
   <!--
     sql-format
