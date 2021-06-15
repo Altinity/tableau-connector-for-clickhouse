@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
-<connector-plugin class='clickhouse_odbc' superclass='odbc' plugin-version='0.0.1' name='ClickHouse' version='18.1' min-version-tableau='2020.4'>
+<connector-plugin class='clickhouse_odbc' superclass='odbc' plugin-version='0.0.1' name='ClickHouse' version='18.1' min-version-tableau='2020.2'>
   <vendor-information>
       <company name="Altinity Inc"/>
       <support-link url="https://altinity.com"/>
