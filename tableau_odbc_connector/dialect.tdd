@@ -2005,5 +2005,12 @@ END</formula>
         <part name='second' value='second' />
       </date-part-group>
     </date-parts>
+    <!--
+      format-date-literal
+      Specifies a formula for expressing a date literal, as well as an *ICU* date format.
+      %1 is the format string and %2 is the formatted date literal.
+    -->
+    <format-date-literal formula="toDate('%1', '%2')"  format='yyyy-MM-dd' />
+    <format-datetime-literal formula="toDateTime('%1', '%2')" format='yyyy-MM-ddTHH:mm:ss.SSSZ' />
   </sql-format>
 </dialect>
