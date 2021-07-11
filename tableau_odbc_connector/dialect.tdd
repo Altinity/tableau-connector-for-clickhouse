@@ -1709,7 +1709,7 @@ END</formula>
       <argument type='datetime' />
     </function>
     <function group='date' name='TODAY' return-type='date'>
-      <formula>CAST(fromUnixTimestamp(UNIX_TIMESTAMP(), &apos;yyyy-MM-dd 00:00:00&apos;) AS Nullable(TIMESTAMP))</formula>
+      <formula>toDate(date_trunc('day', NOW()))</formula>
     </function>
     <function group='date' name='USEC_TO_TIMESTAMP' return-type='datetime'>
       <formula>TIMESTAMP_SECONDS(%1)</formula>
