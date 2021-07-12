@@ -407,11 +407,11 @@
       <argument type='str' />
     </function>
     <function group='string' name='SPACE' return-type='str'>
-      <formula>repeat(' ',%1)</formula>
+      <formula>repeat(&apos; &apos;,%1)</formula>
       <argument type='real' />
     </function>
     <function group='string' name='SPACE' return-type='str'>
-      <formula>repeat(' ',%1)</formula>
+      <formula>repeat(&apos; &apos;,%1)</formula>
       <argument type='int' />
     </function>
     <function group='string' name='SPLIT' return-type='str'>
