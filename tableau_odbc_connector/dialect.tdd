@@ -823,7 +823,7 @@
       <argument type='real' />
     </function>
     <function group='aggregate' name='GROUP_CONCAT' return-type='str'>
-      <formula>groupArray(%1)</formula>
+      <formula>arrayStringConcat(groupArray(%1),',')</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='str' />
     </function>
