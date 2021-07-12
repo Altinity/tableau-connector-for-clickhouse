@@ -37,6 +37,8 @@
       <customization name="CAP_SUPPRESS_TEMP_TABLE_CHECKS" value="yes"/>
       <!--Union Support-->
       <customization name="CAP_SUPPORTS_UNION" value="yes"/>
+      <customization name='CAP_SUPPORTS_SPLIT_FROM_LEFT' value='yes' />
+      <customization name='CAP_SUPPORTS_SPLIT_FROM_RIGHT' value='yes' />
       <!--Query-->
       <customization name="CAP_QUERY_ALLOW_JOIN_REORDER" value="no"/>
       <customization name="CAP_QUERY_ALLOW_PARTIAL_AGGREGATION" value="no"/>
