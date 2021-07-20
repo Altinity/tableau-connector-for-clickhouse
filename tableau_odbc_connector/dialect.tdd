@@ -34,11 +34,11 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='CEILING' return-type='int'>
-      <formula>CAST(CEIL(%1) AS Nullable(BIGINT))</formula>
+      <formula>CEILING(%1)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='CEILING' return-type='int'>
-      <formula>CAST(CEIL(%1) AS Nullable(BIGINT))</formula>
+      <formula>CEILING(%1)</formula>
       <argument type='int' />
     </function>
     <function group='numeric' name='COS' return-type='real'>
@@ -46,7 +46,7 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='COT' return-type='real'>
-      <formula>IF(%1 != 0, COS(%1)/SIN(%1), NULL)</formula>
+      <formula>1/nullIf(TAN(%1),0))</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='DEGREES' return-type='real'>
@@ -54,7 +54,7 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='DIV' return-type='int'>
-      <formula>(CASE WHEN %2 = 0 THEN NULL ELSE intDivOrZero(%1, %2) END)</formula>
+      <formula>intDivOrZero(%1, nullIf(%2,0)</formula>
       <argument type='int' />
       <argument type='int' />
     </function>
@@ -67,11 +67,11 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='FLOOR' return-type='int'>
-      <formula>CAST(FLOOR(%1) AS Nullable(BIGINT))</formula>
+      <formula>FLOOR(%1)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='FLOOR' return-type='int'>
-      <formula>CAST(FLOOR(%1) AS Nullable(BIGINT))</formula>
+      <formula>FLOOR(%1)</formula>
       <argument type='int' />
     </function>
     <function group='numeric' name='HEXBINX' return-type='real'>
@@ -85,69 +85,69 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='LN' return-type='real'>
-      <formula>(CASE WHEN %1 &gt; 0 THEN LN(%1) ELSE CAST(NULL AS Nullable(DOUBLE)) END)</formula>
+      <formula>if(%1 &gt; 0, LN(%1), NULL)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='LOG' return-type='real'>
-      <formula>log(%1)</formula>
+      <formula>LOG10(%1)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='LOG' return-type='real'>
-      <formula>CASE WHEN %1 &gt; 0 AND %2 &gt; 0 AND %2 &lt;&gt; 1 THEN LOG(%2,%1) ELSE NULL END</formula>
+      <formula>if(%1 &gt; 0 AND %2 &gt; 0 AND % != 0, LN(%1)/LN(%2), NULL)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='numeric' name='LOG2' return-type='real'>
-      <formula>(CASE WHEN %1 &gt; 0 THEN LOG2(%1) ELSE NULL END)</formula>
+      <formula>if(%1 &gt; 0, LOG2(%1), NULL)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='MAX' return-type='real'>
-      <formula>(CASE&#10;&#9;WHEN %1 IS NULL THEN NULL&#10;&#9;WHEN %2 IS NULL THEN NULL&#10;&#9;WHEN %1 &lt; %2 THEN %2&#10;&#9;ELSE %1 END)</formula>
+      <formula>GREATEST(%1, %2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='numeric' name='MAX' return-type='int'>
-      <formula>(CASE&#10;&#9;WHEN IFNULL(%1) THEN NULL&#10;&#9;WHEN IFNULL(%2) THEN NULL&#10;&#9;ELSE GREATEST(%1, %2) END)</formula>
+      <formula>GREATEST(%1, %2)</formula>
       <argument type='int' />
       <argument type='int' />
     </function>
     <function group='numeric' name='MAX' return-type='str'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN STRING(NULL) WHEN %1 &gt; %2 THEN %1 ELSE %2 END)</formula>
+      <formula>GREATEST(%1, %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='numeric' name='MAX' return-type='datetime'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN CAST(NULL AS Nullable(TIMESTAMP)) WHEN CAST(%1 AS Nullable(TIMESTAMP)) &gt; CAST(%2 AS Nullable(TIMESTAMP)) THEN %1 ELSE %2 END)</formula>
+      <formula>GREATEST(%1,%2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='numeric' name='MAX' return-type='date'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN NULL WHEN TIMESTAMP(%1) &gt; TIMESTAMP(%2) THEN %1 ELSE %2 END)</formula>
+      <formula>GREATEST(%1,%2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
     <function group='numeric' name='MIN' return-type='real'>
-      <formula>(CASE&#10;&#9;WHEN %1 IS NULL OR %2 IS NULL THEN NULL&#10;&#9;WHEN %1 &lt; %2 THEN %1&#10;&#9;ELSE %2 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='numeric' name='MIN' return-type='int'>
-      <formula>(CASE&#10;&#9;WHEN %1 IS NULL OR %2 IS NULL THEN NULL&#10;&#9;WHEN %1 &gt; %2 THEN %2&#10;&#9;ELSE %1 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='int' />
       <argument type='int' />
     </function>
     <function group='numeric' name='MIN' return-type='str'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN STRING(NULL) WHEN %1 &lt; %2 THEN %1 ELSE %2 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='numeric' name='MIN' return-type='datetime'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN TIMESTAMP(NULL) WHEN %1 &lt; %2 THEN %1 ELSE %2 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='numeric' name='MIN' return-type='date'>
-      <formula>(CASE WHEN (%1 IS NULL) OR (%2 IS NULL) THEN NULL WHEN TIMESTAMP(%1) &lt; TIMESTAMP(%2) THEN %1 ELSE %2 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
@@ -160,7 +160,7 @@
       <formula>PI()</formula>
     </function>
     <function group='numeric' name='POWER' return-type='real'>
-      <formula>(CASE WHEN %1 &gt;= 0 OR FLOOR(%2) = %2 THEN POWER(%1,%2) END)</formula>
+      <formula>POWER(%1,%2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
@@ -170,12 +170,12 @@
       <argument type='int' />
     </function>
     <function group='numeric' name='POWER' return-type='real'>
-      <formula>POWER(CAST(%1 AS FLOAT),%2)</formula>
+      <formula>POWER(%1,%2)</formula>
       <argument type='int' />
       <argument type='int' />
     </function>
     <function group='numeric' name='RADIANS' return-type='real'>
-      <formula>((%1/360) * 2*pi())</formula>
+      <formula>((%1/360) * 2 if(isNaN(sqrt(-1)) , Null,sqrt(-1))*pi())</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='ROUND' return-type='real'>
@@ -183,12 +183,12 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='ROUND' return-type='real'>
-      <formula>CAST(ROUND(%1, %2) AS Nullable(REAL))</formula>
+      <formula>ROUND(%1, %2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='numeric' name='ROUND' return-type='real'>
-      <formula>CAST(ROUND(%1, %2) AS Nullable(REAL))</formula>
+      <formula>ROUND(%1, %2)</formula>
       <argument type='real' />
       <argument type='int' />
     </function>
@@ -205,11 +205,11 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='SQRT' return-type='real'>
-      <formula>CASE WHEN isNull(%1) = 1 OR %1 &lt; 0 THEN NULL ELSE sqrt(Calcs.int2) END</formula>
+      <formula>if(%1 &gt;= 0, SQRT(%1), NULL)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='SQUARE' return-type='real'>
-      <formula>POW(%1,2)</formula>
+      <formula>POWER(%1,2)</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='SQUARE' return-type='int'>
@@ -224,33 +224,8 @@
       <formula>TRUNC(%1)</formula>
       <argument type='real' />
     </function>
-    <function group='numeric' name='XPATH_DOUBLE' return-type='real'>
-      <formula>XPATH_DOUBLE(%1,%2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='numeric' name='XPATH_FLOAT' return-type='real'>
-      <formula>XPATH_FLOAT(%1,%2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='numeric' name='XPATH_INT' return-type='int'>
-      <formula>XPATH_INT(%1,%2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='numeric' name='XPATH_LONG' return-type='int'>
-      <formula>XPATH_LONG(%1,%2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='numeric' name='XPATH_SHORT' return-type='int'>
-      <formula>XPATH_SHORT(%1,%2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
     <function group='numeric;logical' name='ZN' return-type='real'>
-      <formula>COALESCE(%1, 0)</formula>
+      <formula>IFNULL(%1, 0)</formula>
       <argument type='real' />
     </function>
     <function group='numeric;logical' name='ZN' return-type='int'>
@@ -258,269 +233,28 @@
       <argument type='int' />
     </function>
     <function group='string' name='ASCII' return-type='int'>
-      <formula>(CASE
-WHEN subString(%1, 1, 1)=&apos;@&apos; THEN 64
-WHEN subString(%1, 1, 1)=&apos; &apos; THEN 32
-WHEN subString(%1, 1, 1)=&apos;!&apos; THEN 33
-WHEN subString(%1, 1, 1)=&apos;&quot;&apos; THEN 34
-WHEN subString(%1, 1, 1)=&apos;#&apos; THEN 35
-WHEN subString(%1, 1, 1)=&apos;$&apos; THEN 36
-WHEN subString(%1, 1, 1)=&apos;%&apos; THEN 37
-WHEN subString(%1, 1, 1)=&apos;&amp;&apos; THEN 38
-WHEN subString(%1, 1, 1)=&apos;&apos;&apos;&apos; THEN 39
-WHEN subString(%1, 1, 1)=&apos;(&apos; THEN 40
-WHEN subString(%1, 1, 1)=&apos;)&apos; THEN 41
-WHEN subString(%1, 1, 1)=&apos;*&apos; THEN 42
-WHEN subString(%1, 1, 1)=&apos;+&apos; THEN 43
-WHEN subString(%1, 1, 1)=&apos;,&apos; THEN 44
-WHEN subString(%1, 1, 1)=&apos;-&apos; THEN 45
-WHEN subString(%1, 1, 1)=&apos;.&apos; THEN 46
-WHEN subString(%1, 1, 1)=&apos;/&apos; THEN 47
-WHEN subString(%1, 1, 1)=&apos;0&apos; THEN 48
-WHEN subString(%1, 1, 1)=&apos;1&apos; THEN 49
-WHEN subString(%1, 1, 1)=&apos;2&apos; THEN 50
-WHEN subString(%1, 1, 1)=&apos;3&apos; THEN 51
-WHEN subString(%1, 1, 1)=&apos;4&apos; THEN 52
-WHEN subString(%1, 1, 1)=&apos;5&apos; THEN 53
-WHEN subString(%1, 1, 1)=&apos;6&apos; THEN 54
-WHEN subString(%1, 1, 1)=&apos;7&apos; THEN 55
-WHEN subString(%1, 1, 1)=&apos;8&apos; THEN 56
-WHEN subString(%1, 1, 1)=&apos;9&apos; THEN 57
-WHEN subString(%1, 1, 1)=&apos;:&apos; THEN 58
-WHEN subString(%1, 1, 1)=&apos;;&apos; THEN 59
-WHEN subString(%1, 1, 1)=&apos;&lt;&apos; THEN 60
-WHEN subString(%1, 1, 1)=&apos;=&apos; THEN 61
-WHEN subString(%1, 1, 1)=&apos;&gt;&apos; THEN 62
-WHEN subString(%1, 1, 1)=&apos;?&apos; THEN 63
-WHEN subString(%1, 1, 1)=&apos;A&apos; THEN 65
-WHEN subString(%1, 1, 1)=&apos;B&apos; THEN 66
-WHEN subString(%1, 1, 1)=&apos;C&apos; THEN 67
-WHEN subString(%1, 1, 1)=&apos;D&apos; THEN 68
-WHEN subString(%1, 1, 1)=&apos;E&apos; THEN 69
-WHEN subString(%1, 1, 1)=&apos;F&apos; THEN 70
-WHEN subString(%1, 1, 1)=&apos;G&apos; THEN 71
-WHEN subString(%1, 1, 1)=&apos;H&apos; THEN 72
-WHEN subString(%1, 1, 1)=&apos;I&apos; THEN 73
-WHEN subString(%1, 1, 1)=&apos;J&apos; THEN 74
-WHEN subString(%1, 1, 1)=&apos;K&apos; THEN 75
-WHEN subString(%1, 1, 1)=&apos;L&apos; THEN 76
-WHEN subString(%1, 1, 1)=&apos;M&apos; THEN 77
-WHEN subString(%1, 1, 1)=&apos;N&apos; THEN 78
-WHEN subString(%1, 1, 1)=&apos;O&apos; THEN 79
-WHEN subString(%1, 1, 1)=&apos;P&apos; THEN 80
-WHEN subString(%1, 1, 1)=&apos;Q&apos; THEN 81
-WHEN subString(%1, 1, 1)=&apos;R&apos; THEN 82
-WHEN subString(%1, 1, 1)=&apos;S&apos; THEN 83
-WHEN subString(%1, 1, 1)=&apos;T&apos; THEN 84
-WHEN subString(%1, 1, 1)=&apos;U&apos; THEN 85
-WHEN subString(%1, 1, 1)=&apos;V&apos; THEN 86
-WHEN subString(%1, 1, 1)=&apos;W&apos; THEN 87
-WHEN subString(%1, 1, 1)=&apos;X&apos; THEN 88
-WHEN subString(%1, 1, 1)=&apos;Y&apos; THEN 89
-WHEN subString(%1, 1, 1)=&apos;Z&apos; THEN 90
-WHEN subString(%1, 1, 1)=&apos;[&apos; THEN 91
-WHEN subString(%1, 1, 1)=&apos;\\&apos; THEN 92
-WHEN subString(%1, 1, 1)=&apos;]&apos; THEN 93
-WHEN subString(%1, 1, 1)=&apos;^&apos; THEN 94
-WHEN subString(%1, 1, 1)=&apos;_&apos; THEN 95
-WHEN subString(%1, 1, 1)=&apos;`&apos; THEN 96
-WHEN subString(%1, 1, 1)=&apos;a&apos; THEN 97
-WHEN subString(%1, 1, 1)=&apos;b&apos; THEN 98
-WHEN subString(%1, 1, 1)=&apos;c&apos; THEN 99
-WHEN subString(%1, 1, 1)=&apos;d&apos; THEN 100
-WHEN subString(%1, 1, 1)=&apos;e&apos; THEN 101
-WHEN subString(%1, 1, 1)=&apos;f&apos; THEN 102
-WHEN subString(%1, 1, 1)=&apos;g&apos; THEN 103
-WHEN subString(%1, 1, 1)=&apos;h&apos; THEN 104
-WHEN subString(%1, 1, 1)=&apos;i&apos; THEN 105
-WHEN subString(%1, 1, 1)=&apos;j&apos; THEN 106
-WHEN subString(%1, 1, 1)=&apos;k&apos; THEN 107
-WHEN subString(%1, 1, 1)=&apos;l&apos; THEN 108
-WHEN subString(%1, 1, 1)=&apos;m&apos; THEN 109
-WHEN subString(%1, 1, 1)=&apos;n&apos; THEN 110
-WHEN subString(%1, 1, 1)=&apos;o&apos; THEN 111
-WHEN subString(%1, 1, 1)=&apos;p&apos; THEN 112
-WHEN subString(%1, 1, 1)=&apos;q&apos; THEN 113
-WHEN subString(%1, 1, 1)=&apos;r&apos; THEN 114
-WHEN subString(%1, 1, 1)=&apos;s&apos; THEN 115
-WHEN subString(%1, 1, 1)=&apos;t&apos; THEN 116
-WHEN subString(%1, 1, 1)=&apos;u&apos; THEN 117
-WHEN subString(%1, 1, 1)=&apos;v&apos; THEN 118
-WHEN subString(%1, 1, 1)=&apos;w&apos; THEN 119
-WHEN subString(%1, 1, 1)=&apos;x&apos; THEN 120
-WHEN subString(%1, 1, 1)=&apos;y&apos; THEN 121
-WHEN subString(%1, 1, 1)=&apos;z&apos; THEN 122
-WHEN subString(%1, 1, 1)=&apos;{&apos; THEN 123
-WHEN subString(%1, 1, 1)=&apos;|&apos; THEN 124
-WHEN subString(%1, 1, 1)=&apos;}&apos; THEN 125
-WHEN subString(%1, 1, 1)=&apos;~&apos; THEN 126
-WHEN subString(%1, 1, 1)=&apos;&#127;&apos; THEN 127
-ELSE NULL 
-END)</formula>
+      <formula>reinterpretAsUInt8(subString(%1, 1, 1))</formula>
       <argument type='str' />
     </function>
     <function group='string' name='CHAR' return-type='str'>
-      <formula>CASE
-WHEN %1 = 65 THEN &apos;A&apos;
-WHEN %1 = 66 THEN &apos;B&apos;
-WHEN %1 = 67 THEN &apos;C&apos;
-WHEN %1 = 68 THEN &apos;D&apos;
-WHEN %1 = 69 THEN &apos;E&apos;
-WHEN %1 = 70 THEN &apos;F&apos;
-WHEN %1 = 71 THEN &apos;G&apos;
-WHEN %1 = 72 THEN &apos;H&apos;
-WHEN %1 = 73 THEN &apos;I&apos;
-WHEN %1 = 74 THEN &apos;J&apos;
-WHEN %1 = 75 THEN &apos;K&apos;
-WHEN %1 = 76 THEN &apos;L&apos;
-WHEN %1 = 77 THEN &apos;M&apos;
-WHEN %1 = 78 THEN &apos;N&apos;
-WHEN %1 = 79 THEN &apos;O&apos;
-WHEN %1 = 80 THEN &apos;P&apos;
-WHEN %1 = 81 THEN &apos;Q&apos;
-WHEN %1 = 82 THEN &apos;R&apos;
-WHEN %1 = 83 THEN &apos;S&apos;
-WHEN %1 = 84 THEN &apos;T&apos;
-WHEN %1 = 85 THEN &apos;U&apos;
-WHEN %1 = 86 THEN &apos;V&apos;
-WHEN %1 = 87 THEN &apos;W&apos;
-WHEN %1 = 88 THEN &apos;X&apos;
-WHEN %1 = 89 THEN &apos;Y&apos;
-WHEN %1 = 90 THEN &apos;Z&apos;
-WHEN %1 = 91 THEN &apos;[&apos;
-WHEN %1 = 92 THEN &apos;\\&apos;
-WHEN %1 = 93 THEN &apos;]&apos;
-WHEN %1 = 94 THEN &apos;^&apos;
-WHEN %1 = 95 THEN &apos;_&apos;
-WHEN %1 = 96 THEN &apos;`&apos;
-WHEN %1 = 97 THEN &apos;a&apos;
-WHEN %1 = 98 THEN &apos;b&apos;
-WHEN %1 = 99 THEN &apos;c&apos;
-WHEN %1 = 100 THEN &apos;d&apos;
-WHEN %1 = 101 THEN &apos;e&apos;
-WHEN %1 = 102 THEN &apos;f&apos;
-WHEN %1 = 103 THEN &apos;g&apos;
-WHEN %1 = 104 THEN &apos;h&apos;
-WHEN %1 = 105 THEN &apos;i&apos;
-WHEN %1 = 106 THEN &apos;j&apos;
-WHEN %1 = 107 THEN &apos;k&apos;
-WHEN %1 = 108 THEN &apos;l&apos;
-WHEN %1 = 109 THEN &apos;m&apos;
-WHEN %1 = 110 THEN &apos;n&apos;
-WHEN %1 = 111 THEN &apos;o&apos;
-WHEN %1 = 112 THEN &apos;p&apos;
-WHEN %1 = 113 THEN &apos;q&apos;
-WHEN %1 = 114 THEN &apos;r&apos;
-WHEN %1 = 115 THEN &apos;s&apos;
-WHEN %1 = 116 THEN &apos;t&apos;
-WHEN %1 = 117 THEN &apos;u&apos;
-WHEN %1 = 118 THEN &apos;v&apos;
-WHEN %1 = 119 THEN &apos;w&apos;
-WHEN %1 = 120 THEN &apos;x&apos;
-WHEN %1 = 121 THEN &apos;y&apos;
-WHEN %1 = 122 THEN &apos;z&apos;
-WHEN %1 = 123 THEN &apos;{&apos;
-WHEN %1 = 124 THEN &apos;|&apos;
-WHEN %1 = 125 THEN &apos;}&apos;
-WHEN %1 = 126 THEN &apos;~&apos;
-ELSE NULL
-END</formula>
+      <formula>char(%1)</formula>
       <argument type='real' />
     </function>
     <function group='string' name='CHAR' return-type='str'>
-      <formula>CASE
-WHEN %1 = 65 THEN &apos;A&apos;
-WHEN %1 = 66 THEN &apos;B&apos;
-WHEN %1 = 67 THEN &apos;C&apos;
-WHEN %1 = 68 THEN &apos;D&apos;
-WHEN %1 = 69 THEN &apos;E&apos;
-WHEN %1 = 70 THEN &apos;F&apos;
-WHEN %1 = 71 THEN &apos;G&apos;
-WHEN %1 = 72 THEN &apos;H&apos;
-WHEN %1 = 73 THEN &apos;I&apos;
-WHEN %1 = 74 THEN &apos;J&apos;
-WHEN %1 = 75 THEN &apos;K&apos;
-WHEN %1 = 76 THEN &apos;L&apos;
-WHEN %1 = 77 THEN &apos;M&apos;
-WHEN %1 = 78 THEN &apos;N&apos;
-WHEN %1 = 79 THEN &apos;O&apos;
-WHEN %1 = 80 THEN &apos;P&apos;
-WHEN %1 = 81 THEN &apos;Q&apos;
-WHEN %1 = 82 THEN &apos;R&apos;
-WHEN %1 = 83 THEN &apos;S&apos;
-WHEN %1 = 84 THEN &apos;T&apos;
-WHEN %1 = 85 THEN &apos;U&apos;
-WHEN %1 = 86 THEN &apos;V&apos;
-WHEN %1 = 87 THEN &apos;W&apos;
-WHEN %1 = 88 THEN &apos;X&apos;
-WHEN %1 = 89 THEN &apos;Y&apos;
-WHEN %1 = 90 THEN &apos;Z&apos;
-WHEN %1 = 91 THEN &apos;[&apos;
-WHEN %1 = 92 THEN &apos;\\&apos;
-WHEN %1 = 93 THEN &apos;]&apos;
-WHEN %1 = 94 THEN &apos;^&apos;
-WHEN %1 = 95 THEN &apos;_&apos;
-WHEN %1 = 96 THEN &apos;`&apos;
-WHEN %1 = 97 THEN &apos;a&apos;
-WHEN %1 = 98 THEN &apos;b&apos;
-WHEN %1 = 99 THEN &apos;c&apos;
-WHEN %1 = 100 THEN &apos;d&apos;
-WHEN %1 = 101 THEN &apos;e&apos;
-WHEN %1 = 102 THEN &apos;f&apos;
-WHEN %1 = 103 THEN &apos;g&apos;
-WHEN %1 = 104 THEN &apos;h&apos;
-WHEN %1 = 105 THEN &apos;i&apos;
-WHEN %1 = 106 THEN &apos;j&apos;
-WHEN %1 = 107 THEN &apos;k&apos;
-WHEN %1 = 108 THEN &apos;l&apos;
-WHEN %1 = 109 THEN &apos;m&apos;
-WHEN %1 = 110 THEN &apos;n&apos;
-WHEN %1 = 111 THEN &apos;o&apos;
-WHEN %1 = 112 THEN &apos;p&apos;
-WHEN %1 = 113 THEN &apos;q&apos;
-WHEN %1 = 114 THEN &apos;r&apos;
-WHEN %1 = 115 THEN &apos;s&apos;
-WHEN %1 = 116 THEN &apos;t&apos;
-WHEN %1 = 117 THEN &apos;u&apos;
-WHEN %1 = 118 THEN &apos;v&apos;
-WHEN %1 = 119 THEN &apos;w&apos;
-WHEN %1 = 120 THEN &apos;x&apos;
-WHEN %1 = 121 THEN &apos;y&apos;
-WHEN %1 = 122 THEN &apos;z&apos;
-WHEN %1 = 123 THEN &apos;{&apos;
-WHEN %1 = 124 THEN &apos;|&apos;
-WHEN %1 = 125 THEN &apos;}&apos;
-WHEN %1 = 126 THEN &apos;~&apos;
-ELSE NULL
-END</formula>
+      <formula>char(%1)</formula>
       <argument type='int' />
     </function>
     <function group='string' name='CONTAINS' return-type='bool'>
-      <formula>%1 LIKE CONCAT(&apos;%&apos;, %2, &apos;%&apos;)</formula>
+      <formula>POSITION(%1, %2) > 0</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='DOMAIN' return-type='str'>
-      <formula>NET.REG_DOMAIN(%1)</formula>
+      <formula>domain(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='ENDSWITH' return-type='bool'>
-      <formula>((CASE WHEN CHAR_LENGTH(%2) &gt;= 0 THEN RIGHT(TRIM(TRAILING FROM %1),CHAR_LENGTH(%2)) ELSE NULL END) = %2)</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='string' name='FILTER_CONTAINS' return-type='bool'>
-      <formula>INSTR(UCASE(%1), UCASE(%2))</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='string' name='FILTER_ENDSWITH' return-type='bool'>
-      <formula>INSTR(UCASE(RIGHT(RTRIM(%1), LEN(%2))), UCASE(%2))</formula>
-      <argument type='str' />
-      <argument type='str' />
-    </function>
-    <function group='string' name='FILTER_STARTSWITH' return-type='bool'>
-      <formula>INSTR(UCASE(%1), UCASE(%2))</formula>
+      <formula>endsWith(trimRight(%1),%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -548,21 +282,21 @@ END</formula>
       <argument type='real' />
     </function>
     <function group='string' name='GET_JSON_OBJECT' return-type='str'>
-      <formula>GET_JSON_OBJECT(%1,%2)</formula>
+      <formula>JSON_QUERY(%2,%1)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='HOST' return-type='str'>
-      <formula>HOST(%1)</formula>
+      <formula>netloc(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='LEFT' return-type='str'>
-      <formula>LEFT(%1,(CASE WHEN %2 &gt;= 0 THEN %2 ELSE NULL END))</formula>
+      <formula>SUBSTRING(%1,1,%2)</formula>
       <argument type='str' />
       <argument type='real' />
     </function>
     <function group='string' name='LEFT' return-type='str'>
-      <formula>CASE WHEN %2 &gt;= 0 THEN SUBSTRING(%1,1,%2) ELSE NULL END</formula>
+      <formula>SUBSTRING(%1,1,%2)</formula>
       <argument type='str' />
       <argument type='int' />
     </function>
@@ -621,7 +355,7 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='string' name='PARSE_URL_QUERY' return-type='str'>
-      <formula>PARSE_URL(%1,&apos;QUERY&apos;,%2)</formula>
+      <formula>extractURLParameter(%1,%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -654,12 +388,12 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='string' name='RIGHT' return-type='str'>
-      <formula>(CASE WHEN %2 &gt;= 0 THEN RIGHT(%1,%2) ELSE NULL END)</formula>
+      <formula>SUBSTRING(%1,-%2)</formula>
       <argument type='str' />
       <argument type='real' />
     </function>
     <function group='string' name='RIGHT' return-type='str'>
-      <formula>CASE WHEN %2 &gt;= 0 THEN RIGHT(%1,%2) ELSE NULL END</formula>
+      <formula>SUBSTRING(%1,-%2)</formula>
       <argument type='str' />
       <argument type='int' />
     </function>
@@ -673,26 +407,26 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='string' name='SPACE' return-type='str'>
-      <formula>(CASE WHEN CAST(%1 AS BIGINT) IS NULL THEN NULL WHEN CAST(%1 AS BIGINT) &gt;= 0 THEN SPACE(CAST(CAST(%1 AS BIGINT) AS Nullable(INTEGER))) ELSE NULL END)</formula>
+      <formula>repeat(&apos; &apos;,%1)</formula>
       <argument type='real' />
     </function>
     <function group='string' name='SPACE' return-type='str'>
-      <formula>(CASE WHEN %1 &gt;= 0 THEN REPEAT(&apos; &apos;, CAST(%1 AS UInt16)) ELSE NULL END)</formula>
+      <formula>repeat(&apos; &apos;,%1)</formula>
       <argument type='int' />
     </function>
     <function group='string' name='SPLIT' return-type='str'>
-      <formula>toString(arrayElement(splitByString(&apos;%2&apos;,%1),%3))</formula>
+      <formula>splitByString(%2,%1)[%3]</formula>
       <argument type='str' />
       <argument type='localstr' />
       <argument type='localint' />
     </function>
     <function group='string' name='STARTSWITH' return-type='bool'>
-      <formula>(POSITION(%1, %2) = 1)</formula>
+      <formula>startsWith(trimLeft(%1),%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='TLD' return-type='str'>
-      <formula>TLD(%1)</formula>
+      <formula>topLevelDomain(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='TRIM' return-type='str'>
@@ -700,7 +434,7 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='string' name='UPPER' return-type='str'>
-      <formula>UCASE(%1)</formula>
+      <formula>UPPER(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='XPATH_Nullable(String)' return-type='str'>
@@ -872,17 +606,17 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='logical' name='IFNULL' return-type='datetime'>
-      <formula>COALESCE(%1, %2)</formula>
+      <formula>IFNULL(%1, %2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='logical' name='IFNULL' return-type='datetime'>
-      <formula>COALESCE(%1, CAST(%2 AS Nullable(TIMESTAMP)))</formula>
+      <formula>IFNULL(%1, CAST(%2 AS Nullable(TIMESTAMP)))</formula>
       <argument type='datetime' />
       <argument type='date' />
     </function>
     <function group='logical' name='IFNULL' return-type='datetime'>
-      <formula>COALESCE(CAST(%1 AS Nullable(TIMESTAMP)), %2)</formula>
+      <formula>IFNULL(CAST(%1 AS Nullable(TIMESTAMP)), %2)</formula>
       <argument type='date' />
       <argument type='datetime' />
     </function>
@@ -892,7 +626,7 @@ END</formula>
       <argument type='date' />
     </function>
     <function group='logical' name='IFNULL' return-type='spatial'>
-      <formula>COALESCE(%1, %2)</formula>
+      <formula>IFNULL(%1, %2)</formula>
       <argument type='spatial' />
       <argument type='spatial' />
     </function>
@@ -1027,28 +761,28 @@ END</formula>
       <argument type='real' />
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
-      <formula>COUNT(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 0 ELSE NULL END)</formula>
+      <formula>COUNT(%1)</formula>
       <unagg-formula>(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 1 ELSE 0 END)</unagg-formula>
       <argument type='bool' />
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
       <formula>COUNT(%1)</formula>
-      <unagg-formula>(CASE WHEN (%1 IS NULL) THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='real' />
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
       <formula>COUNT(%1)</formula>
-      <unagg-formula>(CASE WHEN (%1 IS NULL) THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='str' />
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
       <formula>COUNT(%1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='datetime' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
-      <formula>COUNT(DISTINCT (CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 0 ELSE NULL END))</formula>
-      <unagg-formula>(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 1 ELSE 0 END)</unagg-formula>
+      <formula>COUNT(DISTINCT %1)</formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='bool' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
@@ -1067,7 +801,7 @@ END</formula>
       <argument type='str' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
-      <formula>COUNT_BIG(DISTINCT %1)</formula>
+      <formula>COUNT(DISTINCT %1)</formula>
       <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
       <argument type='datetime' />
     </function>
@@ -1089,12 +823,12 @@ END</formula>
       <argument type='real' />
     </function>
     <function group='aggregate' name='GROUP_CONCAT' return-type='str'>
-      <formula>GROUP_CONCAT(%1)</formula>
+      <formula>arrayStringConcat(groupArray(%1),',')</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='str' />
     </function>
     <function group='aggregate' name='MAX' return-type='bool'>
-      <formula>BOOL_OR(%1)</formula>
+      <formula>groupBitOr(%1)</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='bool' />
     </function>
@@ -1164,13 +898,13 @@ END</formula>
       <argument type='date' />
     </function>
     <function group='aggregate' name='PERCENTILE' return-type='real'>
-      <formula>PERCENTILE_APPROX(%1, %2)</formula>
+      <formula>quantile(%2)(%2)</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='real' />
       <argument type='localreal' />
     </function>
     <function group='aggregate' name='PERCENTILE' return-type='real'>
-      <formula>PERCENTILE(%1, %2)</formula>
+      <formula>quantile(%2)(%1)</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='int' />
       <argument type='localreal' />
@@ -1310,7 +1044,7 @@ END</formula>
       <argument type='int' />
     </function>
     <function group='operator' name='+' return-type='str'>
-      <formula>(CASE WHEN %1 IS NULL OR %2 IS NULL THEN NULL ELSE %1 || %2 END)</formula>
+      <formula>concat(%1,%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -1706,14 +1440,14 @@ END</formula>
       <formula>NOW()</formula>
     </function>
     <function group='date' name='TIMESTAMP_TO_USEC' return-type='int'>
-      <formula>UNIX_SECONDS(CAST(%1 AS Nullable(TIMESTAMP)))</formula>
+      <formula>toUnixTimestamp64Micro(CAST(%1, 'Nullable(DateTime64(6))'))</formula>
       <argument type='datetime' />
     </function>
     <function group='date' name='TODAY' return-type='date'>
-      <formula>toDate(date_trunc('day', NOW()))</formula>
+      <formula>today()</formula>
     </function>
     <function group='date' name='USEC_TO_TIMESTAMP' return-type='datetime'>
-      <formula>TIMESTAMP_SECONDS(%1)</formula>
+      <formula>toDateTime(fromUnixTimestamp64Micro(%1))</formula>
       <argument type='int' />
     </function>
     <function group='date' name='YEAR' return-type='int'>
@@ -1788,7 +1522,7 @@ END</formula>
       <argument type='localstr' />
     </date-function>
     <date-function name='DATEDIFF' return-type='int'>
-      <formula>CAST(dateDiff('%1', %2, %3) AS Nullable(INTEGER))</formula>
+      <formula>toNullable(dateDiff('%1', %2, %3))</formula>
       <argument type='localstr' />
       <argument type='date' />
       <argument type='date' />
@@ -1835,7 +1569,7 @@ END</formula>
       <argument type='localstr' />
     </date-function>
     <date-function name='DATEPARSE' return-type='datetime'>
-      <formula>TO_TIMESTAMP(%2, %1)</formula>
+      <formula>parseDateTimeBestEffort32(%2, %1)</formula>
       <argument type='localstr' />
       <argument type='str' />
     </date-function>
@@ -1845,7 +1579,7 @@ END</formula>
       <formula part='month'>toMonth(%2)</formula>
       <formula part='dayofyear'>toDayOfYear(%2)</formula>
       <formula part='day'>toDayOfMonth(%2)</formula>
-      <formula part='weekday'>toDayOfWeek(%2) mod 7 + 1</formula>
+      <formula part='weekday'>toDayOfWeek(%2)</formula>
       <formula part='week'>toWeek(%2, 8)</formula>
       <formula part='hour'>toHour(%2)</formula>
       <formula part='minute'>toMinute(%2)</formula>
@@ -1919,13 +1653,8 @@ END</formula>
     <aggregation value='AGG_SKEWNESS'/>
     <aggregation value='AGG_KURTOSIS'/>
     <aggregation value='AGG_INOUT'/>
-    <aggregation value='AGG_SUM_XSQR'/>
     <aggregation value='AGG_USER'/>
-    <aggregation value='AGG_COLLECT'/>
-    <aggregation value='AGG_COVAR'/>
-    <aggregation value='AGG_COVARP'/>
-    <aggregation value='AGG_CORR'/>-->
-
+-->
     <aggregation value='AGG_YEAR'/>
     <aggregation value='AGG_QTR'/>
     <aggregation value='AGG_MONTH'/>
