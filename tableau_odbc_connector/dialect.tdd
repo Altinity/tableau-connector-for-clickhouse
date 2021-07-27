@@ -371,18 +371,18 @@
       <argument type='localint' />
     </function>
     <function group='string' name='REGEXP_MATCH' return-type='bool'>
-      <formula>REGEXP_LIKE(%1, %2)</formula>
+      <formula>MATCH(%1, %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='REGEXP_REPLACE' return-type='str'>
-      <formula>TABLEAU.REGEXP_REPLACE(%1, %2, %3, &apos;g&apos;)</formula>
+      <formula>replaceRegexpAll(%1, %2, %3)</formula>
       <argument type='str' />
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='REPLACE' return-type='str'>
-      <formula>REPLACE(CAST(%1 AS Nullable(TEXT)), CAST(%2 AS Nullable(TEXT)), CAST(%3 AS Nullable(TEXT)))</formula>
+      <formula>REPLACE(%1,%2,%3)</formula>
       <argument type='str' />
       <argument type='str' />
       <argument type='str' />
@@ -611,12 +611,12 @@
       <argument type='datetime' />
     </function>
     <function group='logical' name='IFNULL' return-type='datetime'>
-      <formula>IFNULL(%1, CAST(%2 AS Nullable(TIMESTAMP)))</formula>
+      <formula>IFNULL(%1, toDateTime(%2))</formula>
       <argument type='datetime' />
       <argument type='date' />
     </function>
     <function group='logical' name='IFNULL' return-type='datetime'>
-      <formula>IFNULL(CAST(%1 AS Nullable(TIMESTAMP)), %2)</formula>
+      <formula>IFNULL(toDateTime(%1), %2)</formula>
       <argument type='date' />
       <argument type='datetime' />
     </function>
@@ -818,7 +818,7 @@
     </function>
     <function group='aggregate' name='COVARP' return-type='real'>
       <formula>COVAR_POP(%1, %2)</formula>
-      <unagg-formula>CASE WHEN %1 IS NULL THEN CAST(NULL AS Nullable(DOUBLE))&#10;WHEN %2 IS NULL THEN CAST(NULL AS Nullable(DOUBLE))&#10;ELSE 0.0&#10; END</unagg-formula>
+      <unagg-formula>((%1 + %2) * 0.0)</unagg-formula>
       <argument type='real' />
       <argument type='real' />
     </function>
@@ -916,7 +916,7 @@
     </function>
     <function group='aggregate' name='STDEVP' return-type='real'>
       <formula>(CASE WHEN COUNT(%1) &gt; 0 THEN&#10;&#9;SQRT((COUNT(%1) * SUM(POWER(%1,2)) - POWER(SUM(%1), 2) ) / (POWER(COUNT(%1),2)))&#10;&#9;ELSE NULL END)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN NULL ELSE 0.0 END)</unagg-formula>
+      <unagg-formula>(%1 * 0.0)</unagg-formula>
       <argument type='real' />
     </function>
     <function group='aggregate' name='SUM' return-type='real'>
@@ -936,7 +936,7 @@
     </function>
     <function group='aggregate' name='VARP' return-type='real'>
       <formula>VAR_POP(%1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN NULL ELSE 0.0 END)</unagg-formula>
+      <unagg-formula>(%1 * 0.0)</unagg-formula>
       <argument type='real' />
     </function>
     <function group='operator' name='!' return-type='bool'>
@@ -944,62 +944,62 @@
       <argument type='bool' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 AND NOT %2 OR NOT %1 AND %2)</formula>
+      <formula>xor(%1,%2)</formula>
       <argument type='bool' />
       <argument type='bool' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 AND %2 = 0 OR NOT %1 AND %2 &lt;&gt; 0)</formula>
+      <formula>xor(%1,%2)</formula>
       <argument type='bool' />
       <argument type='int' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 = 0 AND %2 OR %1 &lt;&gt; 0 AND NOT %2)</formula>
+      <formula>xor(%1,%2)</formula>
       <argument type='int' />
       <argument type='bool' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(TIMESTAMP(%1) &lt;&gt; %2)</formula>
+      <formula>(TIMESTAMP(%1) != %2)</formula>
       <argument type='str' />
       <argument type='datetime' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; TIMESTAMP(%2))</formula>
+      <formula>(%1 != TIMESTAMP(%2))</formula>
       <argument type='datetime' />
       <argument type='str' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='datetime' />
       <argument type='date' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='date' />
       <argument type='datetime' />
     </function>
     <function group='operator' name='!=' return-type='bool'>
-      <formula>(%1 &lt;&gt; %2)</formula>
+      <formula>(%1 != %2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
     <function group='operator' name='%' return-type='real'>
-      <formula>(CASE WHEN %2 = 0 THEN NULL ELSE %1 - ( FLOOR ( SIGN(%1) * (%1/%2) ) * %2 * SIGN(%1) ) END)</formula>
+      <formula>moduloOrZero(%1, %2)</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
@@ -1019,12 +1019,12 @@
       <argument type='real' />
     </function>
     <function group='operator' name='*' return-type='real'>
-      <formula>(CAST(%1 AS FLOAT) * %2)</formula>
+      <formula>(%1 * %2)</formula>
       <argument type='real' />
       <argument type='int' />
     </function>
     <function group='operator' name='*' return-type='real'>
-      <formula>(%1 * CAST(%2 AS FLOAT))</formula>
+      <formula>(%1 * %2)</formula>
       <argument type='int' />
       <argument type='real' />
     </function>
