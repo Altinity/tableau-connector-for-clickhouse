@@ -313,7 +313,7 @@
       <argument type='str' />
     </function>
     <function group='string' name='LTRIM_THIS' return-type='str'>
-      <formula>LTRIM(%1,%2)</formula>
+      <formula>TRIM(LEADING %2 FROM %1)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -323,29 +323,29 @@
       <argument type='str' />
     </function>
     <function group='string' name='MID' return-type='str'>
-      <formula>&#10;(CASE WHEN (%2 IS NULL) OR %2 &lt; 1 THEN NULL&#10; ELSE SUBSTRING(%1,CAST(TRUNC(%2) Nullable(INTEGER)),CHAR_LENGTH(%1) - (CAST(TRUNC(%2) Nullable(INTEGER))) + 1) END)</formula>
+      <formula>MID(%1,%2)</formula>
       <argument type='str' />
       <argument type='real' />
     </function>
     <function group='string' name='MID' return-type='str'>
-      <formula>&#10;(CASE WHEN (%2 IS NULL) OR %2 &lt; 1 THEN NULL&#10; ELSE SUBSTRING(%1,%2,CHARACTER_LENGTH(%1) - (%2) + 1) END)</formula>
+      <formula>MID(%1,%2)</formula>
       <argument type='str' />
       <argument type='int' />
     </function>
     <function group='string' name='MID' return-type='str'>
-      <formula>(CASE WHEN %2 IS NULL OR %3 IS NULL THEN NULL&#10; WHEN CAST(FLOOR(%3) Nullable(INTEGER)) &lt; 1 THEN &apos;&apos;&#10; WHEN CAST(FLOOR(%2) Nullable(INTEGER)) &lt; 1 THEN SUBSTR(%1,1,CAST(FLOOR(%3) Nullable(INTEGER)))&#10;      ELSE SUBSTR(%1, CAST(FLOOR(%2) Nullable(INTEGER)), CAST(FLOOR(%3) Nullable(INTEGER))) END)</formula>
+      <formula>MID(%1,%2,%3)</formula>
       <argument type='str' />
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='string' name='MID' return-type='str'>
-      <formula>&#10;(CASE WHEN (%2 IS NULL) OR (%3 IS NULL) THEN NULL&#10; WHEN %3 &lt; 1 THEN &apos;&apos;&#10; WHEN %2 &lt; 1 THEN SUBSTRING(%1,1,%3)&#10; ELSE SUBSTRING(%1,%2,%3) END)</formula>
+      <formula>MID(%1,%2,%3)</formula>
       <argument type='str' />
       <argument type='int' />
       <argument type='int' />
     </function>
     <function group='string' name='MIN' return-type='str'>
-      <formula>(CASE&#10;&#9;WHEN (%1 IS NULL) OR (%2 IS NULL) THEN NULL&#10;&#9;WHEN %1 &lt; %2 THEN %1&#10;&#9;ELSE %2 END)</formula>
+      <formula>LEAST(%1,%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -360,12 +360,12 @@
       <argument type='str' />
     </function>
     <function group='string' name='REGEXP_EXTRACT' return-type='str'>
-      <formula>REGEXP_REPLACE( REGEXP_SUBSTR( %1, %2), %2, &apos;\1&apos;, 1, 1, &apos;c&apos; )</formula>
+      <formula>extract(%1, %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='REGEXP_EXTRACT_NTH' return-type='str'>
-      <formula>TABLEAU.REGEXP_EXTRACT_NTH(%1, %2, %3)</formula>
+      <formula>extractAllGroupsVertical(%1, %2)[1][%3]</formula>
       <argument type='str' />
       <argument type='str' />
       <argument type='localint' />
@@ -402,7 +402,7 @@
       <argument type='str' />
     </function>
     <function group='string' name='RTRIM_THIS' return-type='str'>
-      <formula>RTRIM(%1,%2)</formula>
+      <formula>TRIM(TRAILING %2 FROM %1)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
@@ -483,7 +483,7 @@
       <argument type='date' />
     </function>
     <function group='cast' name='FLOAT' return-type='real'>
-      <formula>CAST(CAST(%1 Nullable(INTEGER) OR NULL) AS Nullable(DOUBLE) OR NULL)</formula>
+      <formula>CAST(%1 AS Nullable(Float64))</formula>
       <argument type='bool' />
     </function>
     <function group='cast' name='FLOAT' return-type='real'>
@@ -507,7 +507,7 @@
       <argument type='date' />
     </function>
     <function group='cast' name='INT' return-type='int'>
-      <formula>(CASE&#10;&#9;WHEN %1 THEN 1&#10;&#9;WHEN NOT %1 THEN 0&#10;&#9;ELSE NULL END)</formula>
+      <formula>CAST(%1 AS Nullable(UInt64))</formula>
       <argument type='bool' />
     </function>
     <function group='cast' name='INT' return-type='int'>
@@ -558,11 +558,11 @@
       <argument type='int' />
     </function>
     <function group='cast' name='REAL' return-type='real'>
-      <formula>CAST(&apos;double&apos;, %1</formula>
+      <formula>toFloat64(%1)</formula>
       <argument type='int' />
     </function>
     <function group='cast' name='STR' return-type='str'>
-      <formula>(CASE&#10;&#9;WHEN %1 = TRUE THEN &apos;1&apos;&#10;&#9;WHEN NOT %1 = TRUE THEN &apos;0&apos;&#10;&#9;ELSE CAST(NULL AS Nullable(String)) END)</formula>
+      <formula>toString(%1 &gt; 0)</formula>
       <argument type='bool' />
     </function>
     <function group='cast' name='STR' return-type='str'>
@@ -586,7 +586,7 @@
       <argument type='date' />
     </function>
     <function group='logical' name='IFNULL' return-type='bool'>
-      <formula>(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 0 ELSE (CASE WHEN %2 THEN 1 WHEN NOT %2 THEN 0 ELSE NULL END) END)=1</formula>
+      <formula>IFNULL(%1, %2)</formula>
       <argument type='bool' />
       <argument type='bool' />
     </function>
@@ -715,23 +715,23 @@
       <argument type='spatial' />
     </function>
     <function group='logical' name='ISNULL' return-type='bool'>
-      <formula>((CASE WHEN %1 OR NOT %1 THEN 1 ELSE NULL END) IS NULL)</formula>
+      <formula>ISNULL(%1)</formula>
       <argument type='bool' />
     </function>
     <function group='logical' name='ISNULL' return-type='bool'>
-      <formula>(%1 IS NULL)</formula>
+      <formula>ISNULL(%1)</formula>
       <argument type='real' />
     </function>
     <function group='logical' name='ISNULL' return-type='bool'>
-      <formula>(%1 IS NULL)</formula>
+      <formula>ISNULL(%1)</formula>
       <argument type='str' />
     </function>
     <function group='logical' name='ISNULL' return-type='bool'>
-      <formula>(%1 IS NULL)</formula>
+      <formula>ISNULL(%1)</formula>
       <argument type='datetime' />
     </function>
     <function group='logical' name='ISNULL' return-type='bool'>
-      <formula>(%1 IS NULL)</formula>
+      <formula>ISNULL(%1)</formula>
       <argument type='spatial' />
     </function>
     <function group='logical' name='XPATH_BOOLEAN' return-type='bool'>
@@ -762,7 +762,7 @@
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
       <formula>COUNT(%1)</formula>
-      <unagg-formula>(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 1 ELSE 0 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='bool' />
     </function>
     <function group='aggregate' name='COUNT' return-type='int'>
@@ -787,27 +787,27 @@
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
       <formula>COUNT(DISTINCT %1)</formula>
-      <unagg-formula>(CASE WHEN (%1 IS NULL) THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='real' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
       <formula>COUNT(DISTINCT %1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='int' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
       <formula>COUNT(DISTINCT %1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='str' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
       <formula>COUNT(DISTINCT %1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='datetime' />
     </function>
     <function group='aggregate' name='COUNTD' return-type='int'>
       <formula>COUNT(DISTINCT %1)</formula>
-      <unagg-formula>(CASE WHEN %1 IS NULL THEN 0 ELSE 1 END)</unagg-formula>
+      <unagg-formula>isNotNull(%1)</unagg-formula>
       <argument type='date' />
     </function>
     <function group='aggregate' name='COVAR' return-type='real'>
@@ -868,7 +868,7 @@
       <argument type='int' />
     </function>
     <function group='aggregate' name='MIN' return-type='bool'>
-      <formula>(MIN(CASE WHEN %1 THEN 1 WHEN NOT %1 THEN 0 ELSE CAST(NULL Nullable(INTEGER)) END)=1)</formula>
+      <formula>groupBitAnd(%1)</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='bool' />
     </function>
@@ -898,7 +898,7 @@
       <argument type='date' />
     </function>
     <function group='aggregate' name='PERCENTILE' return-type='real'>
-      <formula>quantile(%2)(%2)</formula>
+      <formula>quantile(%2)(%1)</formula>
       <unagg-formula>%1</unagg-formula>
       <argument type='real' />
       <argument type='localreal' />
@@ -1142,22 +1142,22 @@
       <argument type='int' />
     </function>
     <function group='operator' name='/' return-type='real'>
-      <formula>(CASE WHEN %2 &lt;&gt; 0 THEN %1 / %2 END)</formula>
+      <formula>(%1 / NULLIF(%2,0))</formula>
       <argument type='real' />
       <argument type='real' />
     </function>
     <function group='operator' name='/' return-type='real'>
-      <formula>(CASE WHEN %2 = 0 THEN NULL ELSE %1 / %2 END)</formula>
+      <formula>(%1 / NULLIF(%2,0))</formula>
       <argument type='real' />
       <argument type='int' />
     </function>
     <function group='operator' name='/' return-type='real'>
-      <formula>(CASE WHEN %2 = 0 THEN NULL ELSE %1 / %2 END)</formula>
+      <formula>(%1 / NULLIF(%2,0))</formula>
       <argument type='int' />
       <argument type='real' />
     </function>
     <function group='operator' name='/' return-type='real'>
-      <formula>(CASE WHEN %2 = 0 THEN NULL ELSE %1 / %2 END)</formula>
+      <formula>(%1 / NULLIF(%2,0))</formula>
       <argument type='int' />
       <argument type='int' />
     </function>
@@ -1409,22 +1409,22 @@
       <argument type='str' />
     </function>
     <function group='date' name='MAX' return-type='datetime'>
-      <formula>(CASE&#10;&#9;WHEN IFNULL(%1) THEN NULL&#10;&#9;WHEN IFNULL(%2) THEN NULL&#10;&#9;ELSE GREATEST(%1, %2) END)</formula>
+      <formula>GREATEST(%1, %2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='date' name='MAX' return-type='date'>
-      <formula>(CASE&#10;&#9;WHEN %1 IS NULL OR %2 IS NULL THEN NULL&#10;&#9;WHEN %1 &gt; %2 THEN %1&#10;&#9;ELSE %2 END)</formula>
+      <formula>GREATEST(%1, %2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
     <function group='date' name='MIN' return-type='datetime'>
-      <formula>(CASE&#10;&#9;WHEN %1 IS NULL OR %2 IS NULL THEN NULL&#10;&#9;WHEN %1 &lt; %2 THEN %1&#10;&#9;ELSE %2 END)</formula>
+      <formula>LEAST(%1, %2)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='date' name='MIN' return-type='date'>
-      <formula>(CASE&#10;&#9;WHEN (%1 IS NULL) OR (%2 IS NULL) THEN NULL&#10;&#9;WHEN %1 &lt; %2 THEN %1&#10;&#9;ELSE %2 END)</formula>
+      <formula>LEAST(%1, %2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
