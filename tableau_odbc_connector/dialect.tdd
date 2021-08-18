@@ -175,7 +175,7 @@
       <argument type='int' />
     </function>
     <function group='numeric' name='RADIANS' return-type='real'>
-      <formula>((%1/360) * 2 if(isNaN(sqrt(-1)) , Null,sqrt(-1))*pi())</formula>
+      <formula>((%1/360) * 2 * pi())</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='ROUND' return-type='real'>
