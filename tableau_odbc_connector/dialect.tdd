@@ -1083,22 +1083,22 @@
       <argument type='real' />
     </function>
     <function group='operator' name='-' return-type='real'>
-      <formula>(DATE_DIFF(&apos;DAY&apos;, CAST( %2 AS Nullable(TIMESTAMP)), CAST(%1 AS Nullable(TIMESTAMP))) + (COALESCE(HOUR(%1), 0) - COALESCE(HOUR(%2), 0) + (COALESCE(MINUTE(%1), 0) - COALESCE(MINUTE(%2), 0) + (COALESCE(SECOND(%1), 0) - COALESCE(SECOND(%2), 0)) / 60.0) / 60.0) / 24.0)</formula>
+      <formula>(DATE_DIFF(&apos;DAY&apos;, %2, CAST(%1 AS Nullable(TIMESTAMP))) + (COALESCE(HOUR(%1), 0) - COALESCE(HOUR(%2), 0) + (COALESCE(MINUTE(%1), 0) - COALESCE(MINUTE(%2), 0) + (COALESCE(SECOND(%1), 0) - COALESCE(SECOND(%2), 0)) / 60.0) / 60.0) / 24.0)</formula>
       <argument type='datetime' />
       <argument type='datetime' />
     </function>
     <function group='operator' name='-' return-type='real'>
-      <formula>CASE WHEN %1 IS NULL OR %2 IS NULL THEN CAST(NULL AS Nullable(DOUBLE)) ELSE (CAST(%1 AS Nullable(DATE)) - %2 + CAST(EXTRACT(HOUR FROM %1) AS Nullable(DOUBLE)) / 24 +  CAST(EXTRACT(MINUTE FROM %1) AS Nullable(DOUBLE)) / (24 * 60) + CAST(EXTRACT(SECOND FROM %1) AS Nullable(DOUBLE)) / (24 * 60 * 60) ) END</formula>
+      <formula>(%1 - toDateTime(%2)) / 86400.0</formula>
       <argument type='datetime' />
       <argument type='date' />
     </function>
     <function group='operator' name='-' return-type='real'>
-      <formula>(toUnixTimestamp(%1) - toUnixTimestamp(%2)) / 86400.0</formula>
+      <formula>(toDateTime(%1) - %2) / 86400.0</formula>
       <argument type='date' />
       <argument type='datetime' />
     </function>
-    <function group='operator' name='-' return-type='real'>
-      <formula>(toUnixTimestamp(%1) - toUnixTimestamp(%2)) / 86400.0</formula>
+    <function group='operator' name='-' return-type='int'>
+      <formula>(%1 - %2)</formula>
       <argument type='date' />
       <argument type='date' />
     </function>
@@ -1117,12 +1117,12 @@
       <argument type='date' />
     </function>
     <function group='operator' name='-' return-type='datetime'>
-      <formula>DATE_ADD(DAY, - TRUNC(%2), %1)</formula>
+      <formula>subtractDays(%1,TRUNC(%2))</formula>
       <argument type='datetime' />
       <argument type='real' />
     </function>
     <function group='operator' name='-' return-type='datetime'>
-      <formula>DATE_ADD(DAY, - %2, %1)</formula>
+      <formula>subtractDays(%1,%2)</formula>
       <argument type='datetime' />
       <argument type='int' />
     </function>
@@ -1132,12 +1132,12 @@
       <argument type='real' />
     </function>
     <function group='operator' name='-' return-type='date'>
-      <formula>(ADDDAY(%1, TRUNC(-(%2))))</formula>
+      <formula>(%1 - TRUNC(%2))</formula>
       <argument type='date' />
       <argument type='real' />
     </function>
     <function group='operator' name='-' return-type='date'>
-      <formula>DATEADD(DAY, -%2, %1)</formula>
+      <formula>(%1 - %2)</formula>
       <argument type='date' />
       <argument type='int' />
     </function>
@@ -1646,8 +1646,9 @@
     <aggregation value='AGG_SUM_XSQR'/>
     <aggregation value='AGG_COLLECT'/>
     <aggregation value='AGG_ATTR'/>
-<!--<aggregation value='AGG_MEDIAN'/>
+    <aggregation value='AGG_MEDIAN'/>
     <aggregation value='AGG_PERCENTILE'/>
+<!--
     <aggregation value='AGG_QUART1'/>
     <aggregation value='AGG_QUART3'/>
     <aggregation value='AGG_SKEWNESS'/>
