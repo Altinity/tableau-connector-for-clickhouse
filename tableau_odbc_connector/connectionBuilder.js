@@ -12,6 +12,8 @@
     params["UseDeclareFetch"] = "1";
     params["Fetch"] = "2048";
     params["Timeout"] = "300";
+    params["VerifyConnectionEarly"] = "on";
+    params["HugeIntAsString"] = "on";
 
     if (attr[connectionHelper.attributeSSLMode] == "require")
     {
