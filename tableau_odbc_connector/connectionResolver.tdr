@@ -13,13 +13,15 @@
           <attr>username</attr>
           <attr>password</attr>
           <attr>sslmode</attr>
+          <attr>timeout</attr>
         </attribute-list>
       </required-attributes>
     </connection-normalizer>
 	</connection-resolver>
 	<driver-resolver>
-    <driver-match >
-      <driver-name type='regex'>ClickHouse ODBC Driver (Unicode)*</driver-name>
+    <driver-match>
+      <driver-name type='exact'>ClickHouse ODBC Driver (ANSI)</driver-name>
+      <driver-version min="1.1.10.25734"/>
     </driver-match>
   </driver-resolver>
 </tdr>

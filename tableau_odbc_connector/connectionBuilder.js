@@ -7,18 +7,18 @@
     params["DATABASE"] = attr[connectionHelper.attributeDatabase];
     params["UID"] = attr[connectionHelper.attributeUsername];
     params["PWD"] = attr[connectionHelper.attributePassword];
-    params["BOOLSASCHAR"] = "0";
-    params["LFCONVERSION"] = "0";
-    params["UseDeclareFetch"] = "1";
-    params["Fetch"] = "2048";
-    params["Timeout"] = "300";
+    params["Timeout"] = "600";
     params["VerifyConnectionEarly"] = "on";
     params["HugeIntAsString"] = "on";
 
-    if (attr[connectionHelper.attributeSSLMode] == "require")
+    if ( attr[connectionHelper.attributeSSLMode] == "require" || attr[connectionHelper.attributePort] == "8443" )
     {
-        params["sslmode"] = "require";
-        params["CALocation"] = "/usr/local/etc/openssl@1.1/cert.pem";
+        params["sslmode"] = "allow";
+    }
+
+    if ( attr["timeout"] > "" && !isNaN(attr["timeout"]) )
+    {
+        params["Timeout"] = attr["timeout"];
     }
 
     var formattedParams = [];

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
-<connector-plugin class='clickhouse_odbc' superclass='odbc' plugin-version='0.0.1' name='ClickHouse' version='18.1' min-version-tableau='2020.2'>
+<connector-plugin class='clickhouse_odbc' superclass='odbc' plugin-version='1.2' name='ClickHouse ODBC' version='1.2' min-version-tableau='2020.4'>
   <vendor-information>
       <company name="Altinity Inc"/>
       <support-link url="https://altinity.com"/>
@@ -15,7 +15,6 @@
       <customization name='CAP_CONNECT_STORED_PROCEDURE' value='no' />
       <customization name='CAP_QUERY_JOIN_PUSH_DOWN_CONDITION_EXPRESSIONS' value='yes' />
       <!--<customization name="CAP_ODBC_FETCH_ABORT_FORCE_CANCEL_STATEMENT" value="yes"/>-->
-      <customization name='odbc-connect-string-extras' value='Fetch=100000' />  
       <customization name='CAP_ODBC_FETCH_BUFFERS_SIZE_FIXED' value='yes' />  
       <!--<customization name="CAP_ODBC_FETCH_IGNORE_FRACTIONAL_SECONDS" value="no"/>
       <customization name="CAP_ODBC_FETCH_RESIZE_BUFFERS" value="yes"/>
@@ -61,7 +60,8 @@
       <customization name="CAP_ODBC_FETCH_ABORT_FORCE_CANCEL_STATEMENT" value="yes"/>
     </customizations>
   </connection-customization>
-  <connection-dialog file='connection-dialog.tcd'/>
+  <connection-fields file='connectionFields.xml'/>
+  <connection-metadata file='connectionMetadata.xml'/>
   <connection-resolver file="connectionResolver.tdr"/>
   <dialect file='dialect.tdd'/>
 </connector-plugin>
