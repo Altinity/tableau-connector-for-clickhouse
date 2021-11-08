@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <connection-fields>
   <field name="server" label="Server" value-type="string" category="endpoint" />
-  <field name="port" label="Port" value-type="string" category="endpoint" default-value="8132" >
+  <field name="port" label="Port" value-type="string" category="endpoint" default-value="8123" >
     <validation-rule reg-exp="^[0-9]+$"/>
   </field>
   <field name="authentication" label="Authentication" category="authentication" value-type="string" editable="false" default-value="auth-user-pass" />
@@ -13,7 +13,7 @@
       <true-value value="require" />
     </boolean-options>
   </field>
-  <field name="timeout" label="Timeout (sec)" value-type="string" category="endpoint" optional="true" >
+  <field name="v-timeout" label="Timeout (ms)" category="general" value-type="string" optional="true" >
     <validation-rule reg-exp="(^[0-9]+$|^$)"/>
   </field>
 </connection-fields>

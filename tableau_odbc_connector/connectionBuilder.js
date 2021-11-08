@@ -16,9 +16,9 @@
         params["sslmode"] = "allow";
     }
 
-    if ( attr["timeout"] > "" && !isNaN(attr["timeout"]) )
+    if ( attr["v-timeout"] > "" && !isNaN(attr["v-timeout"]) )
     {
-        params["Timeout"] = attr["timeout"];
+        params["Timeout"] = attr["v-timeout"];
     }
 
     var formattedParams = [];
