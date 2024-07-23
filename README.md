@@ -1,4 +1,4 @@
-# Altinity Tableau Connector for ClickHouse 
+# Altinity Tableau Connector for ClickHouse¬Æ
 
 This connector is a Tableau extension that improves compatibility between Tableau and ClickHouse. The connector gives users full access to Tableau data modeling and exploration features on ClickHouse data. Connector is extension that still needs database driver to comunicate with ClickHouse. Tableau does support 2 driver types: ODBC and JDBC. So there are 2 versions of this connector that are based on these protocols. Decision which one to use should be based on what operating system you use to run Tableau Dekstop (or Server). Windows platform has good support of ODBC protocol and its much easier to install ClickHouse ODBC driver on Windows. So if you use Windows then its better to go with ODBC version. If you run Tableau Desktop on Mac or want that your Tableau dashboards work on any platform (Windows, MacOS, Linux, Tableau Cloud) - you should use JDBC connector.
 
@@ -14,7 +14,7 @@ Before installing the Altinity JDBC for ClickHouse with Tableau Desktop/Server, 
 1. Download the Clickhouse JDBC Driver from [Releases page](https://github.com/ClickHouse/clickhouse-jdbc/releases) and place the file in the following location based on your operating system:
 - macOS: ~/Library/Tableau/Drivers
 - Windows: C:\Program Files\Tableau\Drivers
-If the folder doesnít exist then you need to create it.
+If the folder doesn‚Äôt exist then you need to create it.
 2. Download the latest JDBC connector file from  [Releases](https://github.com/Altinity/tableau-connector-for-clickhouse/releases) and place it in:
 - macOS: ~/Documents/My Tableau Repository/Connectors
 - Windows: C:\Users\[Windows User]\Documents\My Tableau Repository\Connectors
@@ -24,7 +24,7 @@ If the folder doesnít exist then you need to create it.
 1. Download the Clickhouse JDBC Driver from [Releases page](https://github.com/ClickHouse/clickhouse-jdbc/releases) and place the file in the following location based on your operating system:
 - Windows: C:\Program Files\Tableau\Drivers
 - Linux: /opt/tableau/tableau_driver/jdbc
-If this folder doesnít exist then you need to create it. Also check that Tableau has access to this directory
+If this folder doesn‚Äôt exist then you need to create it. Also check that Tableau has access to this directory
 Here are sample commands for Linux:
 ```bash
     sudo mkdir -p /opt/tableau/tableau_driver/jdbc
@@ -34,8 +34,8 @@ Here are sample commands for Linux:
 2. Download the latest JDBC connector file [Releases](https://github.com/Altinity/tableau-connector-for-clickhouse/releases) and place it in:
     Windows: C:\Program Files\Tableau\Connectors
     Linux: /opt/tableau/connectors
-3.  Restart Tableau Server. Just run the command ìtsm restartî. It will take some time, usually less than 10 mins. If you have more than one instance of Tableau Server you need to repeat steps 1-3 on each node.
-4. Check that Tableau Server has ìAltinity JDBC for ClickHouseî in supported connections.
+3.  Restart Tableau Server. Just run the command ‚Äútsm restart‚Äù. It will take some time, usually less than 10 mins. If you have more than one instance of Tableau Server you need to repeat steps 1-3 on each node.
+4. Check that Tableau Server has ‚ÄúAltinity JDBC for ClickHouse‚Äù in supported connections.
 
 ### How to use JDBC version
 After the connector is successfully installed, open Tableau Desktop.
