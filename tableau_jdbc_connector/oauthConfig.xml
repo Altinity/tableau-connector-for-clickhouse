@@ -40,3 +40,36 @@
             <key>OAUTH_CAP_SUPPORTS_CUSTOM_DOMAIN</key>
             <value>true</value>
         </entry>
+    </capabilities>
+
+    <!-- Mapping from token endpoint JSON response fields to Tableau OAuth attributes -->
+    <accessTokenResponseMaps>
+        <!-- Access token returned by the IdP -->
+        <entry>
+            <key>ACCESSTOKEN</key>
+            <value>access_token</value>
+        </entry>
+        <!-- Refresh token returned by the IdP -->
+        <entry>
+            <key>REFRESHTOKEN</key>
+            <value>refresh_token</value>
+        </entry>
+        <!-- Username/principal extracted from the token response -->
+        <entry>
+            <key>username</key>
+            <value>preferred_username</value>
+        </entry>
+        <!-- Access token lifetime in seconds -->
+        <entry>
+            <key>access-token-expires-in</key>
+            <value>expires_in</value>
+        </entry>
+        <!-- Time when the access token was issued (if present in the response) -->
+        <entry>
+            <key>access-token-issue-time</key>
+            <value>issued_at</value>
+        </entry>
+    </accessTokenResponseMaps>
+
+    <!-- If refreshTokenResponseMaps is omitted, Tableau reuses accessTokenResponseMaps for refresh responses -->
+</pluginOAuthConfig>
