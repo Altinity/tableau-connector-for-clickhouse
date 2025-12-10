@@ -4,6 +4,7 @@
     <connection-builder>
       <script file='connectionBuilder.js'/>
     </connection-builder>
+
     <connection-normalizer>
       <required-attributes>
         <attribute-list>
@@ -11,12 +12,13 @@
           <attr>port</attr>
           <attr>authentication</attr>
           <attr>username</attr>
-          <attr>password</attr>
+          <!-- password is not required anymore: for OAuth it is not used -->
           <attr>sslmode</attr>
           <attr>v-timeout</attr>
         </attribute-list>
       </required-attributes>
     </connection-normalizer>
+
     <connection-properties>
       <script file='connectionProperties.js'/>
     </connection-properties>
