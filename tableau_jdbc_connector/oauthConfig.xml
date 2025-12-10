@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pluginOAuthConfig>
+    <!-- Must match the "class" attribute in manifest.xml -->
+    <dbclass>clickhouse_jdbc</dbclass>
+
+    <!-- OAuth client for Tableau Desktop (native application) -->
+    <clientIdDesktop>YOUR_DESKTOP_CLIENT_ID</clientIdDesktop>
+    <clientSecretDesktop>YOUR_DESKTOP_CLIENT_SECRET</clientSecretDesktop>
+
+    <!-- Example for an IdP with a fixed base URL (adjust to your IdP) -->
+    <!-- You can either use full URLs or rely on a custom domain pattern + relative paths -->
+    <authUri>/oauth2/v2.0/authorize</authUri>
+    <tokenUri>/oauth2/v2.0/token</tokenUri>
+    <userInfoUri>/oauth2/v2.0/userinfo</userInfoUri>
+
+    <!-- Validation regex for allowed IdP instance URLs (adapt to your domains) -->
+    <instanceUrlValidationRegex>
+        ^https://(.+\.)?(exampleidp\.(com|us|eu))(.*)
+    </instanceUrlValidationRegex>
+
+    <!-- OAuth scopes requested from the IdP -->
+    <scopes>openid</scopes>
+    <scopes>profile</scopes>
+    <scopes>offline_access</scopes>
+
+    <!-- OAuth behavior capabilities for this connector -->
+    <capabilities>
+        <!-- Require PKCE for authorization code flow -->
+        <entry>
+            <key>OAUTH_CAP_REQUIRE_PKCE</key>
+            <value>true</value>
+        </entry>
+        <!-- PKCE must specify an explicit code_challenge_method -->
+        <entry>
+            <key>OAUTH_CAP_PKCE_REQUIRES_CODE_CHALLENGE_METHOD</key>
+            <value>true</value>
+        </entry>
+        <!-- Connector supports custom IdP domains (multi-tenant / custom domains) -->
+        <entry>
+            <key>OAUTH_CAP_SUPPORTS_CUSTOM_DOMAIN</key>
+            <value>true</value>
+        </entry>
+    </capabilities>
+
+    <!-- Mapping from token endpoint JSON response fields to Tableau OAuth attributes -->
+    <accessTokenResponseMaps>
+        <!-- Access token returned by the IdP -->
+        <entry>
+            <key>ACCESSTOKEN</key>
+            <value>access_token</value>
+        </entry>
+        <!-- Refresh token returned by the IdP -->
+        <entry>
+            <key>REFRESHTOKEN</key>
+            <value>refresh_token</value>
+        </entry>
+        <!-- Username/principal extracted from the token response -->
+        <entry>
+            <key>username</key>
+            <value>preferred_username</value>
+        </entry>
+        <!-- Access token lifetime in seconds -->
+        <entry>
+            <key>access-token-expires-in</key>
+            <value>expires_in</value>
+        </entry>
+        <!-- Time when the access token was issued (if present in the response) -->
+        <entry>
+            <key>access-token-issue-time</key>
+            <value>issued_at</value>
+        </entry>
+    </accessTokenResponseMaps>
+
+    <!-- If refreshTokenResponseMaps is omitted, Tableau reuses accessTokenResponseMaps for refresh responses -->
+</pluginOAuthConfig>

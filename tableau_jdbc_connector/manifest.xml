@@ -5,6 +5,7 @@
       <support-link url="https://altinity.com" />
       <driver-download-link url="https://github.com/ClickHouse/clickhouse-jdbc/releases" />
   </vendor-information>
+  <oauth-config file="oauthConfig.xml"/>
   <connection-customization class="clickhouse_jdbc" enabled="true" version="1.4.1">
     <vendor name="vendor" />
     <driver name="driver" />
