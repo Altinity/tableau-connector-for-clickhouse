@@ -48,7 +48,8 @@ After the connector is successfully installed, open Tableau Desktop.
 
 1. You should see a new connection type - **Altinity JDBC for ClickHouse by Altinity Inc**.
 2. Enter your credentials in the dialog window.
-3. Click "Sign in" and you should see the list of available databases.
+3. Optional: on the **Advanced** tab, use **Session parameters** to pass literal ClickHouse HTTP/session parameters such as `log_comment=tableau`. You can enter one `key=value` pair per line, or separate multiple pairs with commas, semicolons, or `&`. Tableau Initial SQL tokens such as `[WorkbookName]` are not expanded in this field.
+4. Click "Sign in" and you should see the list of available databases.
 
 
 ### Pre-Requisites for the ODBC version
@@ -73,6 +74,7 @@ After the connector is successfully installed, open Tableau Desktop.
 
 1. You should see a new connection type - **Altinity ODBC for ClickHouse by Altinity Inc**.
 2. Enter your credentials in the dialog window.
-3. Enter the query `SELECT version();` into the Initial SQL tab to verify that connection was established successfully and click **Sign in**.
+3. Optional: on the **Advanced** tab, use **Session parameters** to pass literal ClickHouse HTTP/session parameters such as `log_comment=tableau`. You can enter one `key=value` pair per line, or separate multiple pairs with commas, semicolons, or `&`. Tableau Initial SQL tokens such as `[WorkbookName]` are not expanded in this field.
+4. Enter the query `SELECT version();` into the Initial SQL tab to verify that connection was established successfully and click **Sign in**.
 
 **You dont need to create an ODBC DSN!** The connection credentials that you entered in dialog window will be used by the connector directly.

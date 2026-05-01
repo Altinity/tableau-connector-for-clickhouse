@@ -15,6 +15,7 @@
           <attr>password</attr>
           <attr>sslmode</attr>
           <attr>v-timeout</attr>
+          <attr>v-session-parameters</attr>
         </attribute-list>
       </required-attributes>
     </connection-normalizer>
