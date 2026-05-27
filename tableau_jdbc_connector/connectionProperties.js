@@ -1,10 +1,18 @@
 (function propertiesbuilder(attr) {
 
     var props = {};
-    props["user"] = attr[connectionHelper.attributeUsername];
-    props["password"] = attr[connectionHelper.attributePassword];
+    var authAttrValue = attr[connectionHelper.attributeAuthentication];
 
-    props["use_server_time_zone_for_dates"] = 1;
+    if (authAttrValue == "oauth")
+    {
+        props["access_token"] = attr["ACCESSTOKEN"];
+    }
+    else
+    {
+        props["user"] = attr[connectionHelper.attributeUsername];
+        props["password"] = attr[connectionHelper.attributePassword];
+    }
+
     props["use_server_time_zone_for_dates"] = 1;
     props["socket_timeout"] = 300000;
 
