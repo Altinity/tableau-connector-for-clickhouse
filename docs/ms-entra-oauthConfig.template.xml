@@ -14,7 +14,9 @@
   <scopes>profile</scopes>
   <scopes>email</scopes>
   <scopes>offline_access</scopes>
-  <scopes>api://REPLACE_WITH_CLICKHOUSE_API_APP_ID/ClickHouse.Access</scopes>
+  <!-- Full delegated scope from the ClickHouse API app's Expose an API page.
+       Example: api://00000000-0000-0000-0000-000000000000/ClickHouse.Access -->
+  <scopes>REPLACE_WITH_CLICKHOUSE_API_SCOPE</scopes>
 
   <capabilities>
     <entry>

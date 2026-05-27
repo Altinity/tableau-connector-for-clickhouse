@@ -55,13 +55,15 @@ The JDBC connector supports Microsoft Entra ID OAuth through Tableau custom OAut
 
 The connector requires a ClickHouse JDBC driver version that supports access token authentication with the `access_token` connection property.
 
-Create the following Microsoft Entra app registrations:
+Create the following Microsoft Entra app registrations in the same tenant used by `authUri` and `tokenUri`:
 
-1. A resource/API app for ClickHouse. Expose a delegated scope, for example `api://<clickhouse-api-app-id>/ClickHouse.Access`.
-2. A Desktop public/native client. Enable public client flows, configure loopback redirect `http://localhost`, and use authorization code flow with PKCE. Do not configure or distribute a client secret for Desktop.
-3. A Tableau Server confidential/web client. Configure redirect URI `https://<tableau-server-host>/auth/add_oauth_token` and create a client secret.
+1. A resource/API app for ClickHouse. In **Expose an API**, set the Application ID URI, for example `api://<clickhouse-api-app-client-id>`, and add a delegated scope named `ClickHouse.Access`. Record the full scope string shown by Entra, for example `api://<clickhouse-api-app-client-id>/ClickHouse.Access`.
+2. A Desktop public/native client. Enable public client flows, configure loopback redirect `http://localhost`, and use authorization code flow with PKCE. Add the ClickHouse API delegated `ClickHouse.Access` permission to this client and grant consent, or pre-authorize this client from the resource/API app. Do not configure or distribute a client secret for Desktop.
+3. A Tableau Server confidential/web client. Configure redirect URI `https://<tableau-server-host>/auth/add_oauth_token` and create a client secret. Add the same ClickHouse API delegated `ClickHouse.Access` permission and grant admin consent.
 
 Copy `docs/ms-entra-oauthConfig.template.xml`, replace the placeholders, and install it as `custom_entra.xml`.
+
+Set `REPLACE_WITH_CLICKHOUSE_API_SCOPE` to the full delegated scope from the resource/API app, not to the Desktop or Server client ID. If Entra returns `AADSTS500011`, verify that the resource shown in the error, such as `api://...`, exactly matches the resource/API app's Application ID URI and that the authentication request is using the correct tenant.
 
 For Tableau Desktop:
 
