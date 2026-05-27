@@ -4,9 +4,22 @@
   <field name="port" label="Port" value-type="string" category="endpoint" default-value="8123" >
     <validation-rule reg-exp="^[0-9]+$"/>
   </field>
-  <field name="authentication" label="Authentication" category="authentication" value-type="string" editable="false" default-value="auth-user-pass" />
-  <field name="username" label="Username" value-type="string" category="authentication" />
-  <field name="password" label="Password" value-type="string" category="authentication" secure="true" optional="true" />
+  <field name="authentication" label="Authentication" category="authentication" value-type="selection" default-value="auth-user-pass" >
+    <selection-group>
+      <option value="auth-user-pass" label="Username and Password" />
+      <option value="oauth" label="Microsoft Entra ID OAuth" />
+    </selection-group>
+  </field>
+  <field name="username" label="Username" value-type="string" category="authentication" >
+    <conditions>
+      <condition field="authentication" value="auth-user-pass" />
+    </conditions>
+  </field>
+  <field name="password" label="Password" value-type="string" category="authentication" secure="true" optional="true" >
+    <conditions>
+      <condition field="authentication" value="auth-user-pass" />
+    </conditions>
+  </field>
   <field name="sslmode" label="Require SSL" value-type="boolean" category="general" default-value="" >
     <boolean-options>
       <false-value value="" />

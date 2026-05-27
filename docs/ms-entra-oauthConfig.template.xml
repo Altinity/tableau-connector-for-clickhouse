@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pluginOAuthConfig>
+  <dbclass>clickhouse_jdbc</dbclass>
+  <oauthConfigId>custom_entra</oauthConfigId>
+  <configLabel>Microsoft Entra ID</configLabel>
+
+  <!-- Desktop/native public client application ID. Do not use a client secret for Desktop. -->
+  <clientIdDesktop>REPLACE_WITH_DESKTOP_PUBLIC_CLIENT_ID</clientIdDesktop>
+
+  <authUri>https://login.microsoftonline.com/REPLACE_WITH_TENANT_ID/oauth2/v2.0/authorize</authUri>
+  <tokenUri>https://login.microsoftonline.com/REPLACE_WITH_TENANT_ID/oauth2/v2.0/token</tokenUri>
+
+  <scopes>openid</scopes>
+  <scopes>profile</scopes>
+  <scopes>email</scopes>
+  <scopes>offline_access</scopes>
+  <!-- Full delegated scope from the ClickHouse API app's Expose an API page.
+       Example: api://00000000-0000-0000-0000-000000000000/ClickHouse.Access -->
+  <scopes>REPLACE_WITH_CLICKHOUSE_API_SCOPE</scopes>
+
+  <capabilities>
+    <entry>
+      <key>OAUTH_CAP_SUPPORTS_STATE</key>
+      <value>true</value>
+    </entry>
+    <entry>
+      <key>OAUTH_CAP_REQUIRE_PKCE</key>
+      <value>true</value>
+    </entry>
+    <entry>
+      <key>OAUTH_CAP_PKCE_REQUIRES_CODE_CHALLENGE_METHOD</key>
+      <value>true</value>
+    </entry>
+    <entry>
+      <key>OAUTH_CAP_SUPPORTS_HTTP_SCHEME_LOOPBACK_REDIRECT_URLS</key>
+      <value>true</value>
+    </entry>
+    <entry>
+      <key>OAUTH_CAP_SUPPORTS_GET_USERINFO_FROM_ID_TOKEN</key>
+      <value>true</value>
+    </entry>
+  </capabilities>
+
+  <accessTokenResponseMaps>
+    <entry>
+      <key>ACCESSTOKEN</key>
+      <value>access_token</value>
+    </entry>
+    <entry>
+      <key>REFRESHTOKEN</key>
+      <value>refresh_token</value>
+    </entry>
+    <entry>
+      <key>access-token-expires-in</key>
+      <value>expires_in</value>
+    </entry>
+    <entry>
+      <key>id-token</key>
+      <value>id_token</value>
+    </entry>
+    <entry>
+      <key>username</key>
+      <value>preferred_username</value>
+    </entry>
+  </accessTokenResponseMaps>
+
+  <refreshTokenResponseMaps>
+    <entry>
+      <key>ACCESSTOKEN</key>
+      <value>access_token</value>
+    </entry>
+    <entry>
+      <key>REFRESHTOKEN</key>
+      <value>refresh_token</value>
+    </entry>
+    <entry>
+      <key>access-token-expires-in</key>
+      <value>expires_in</value>
+    </entry>
+    <entry>
+      <key>id-token</key>
+      <value>id_token</value>
+    </entry>
+    <entry>
+      <key>username</key>
+      <value>preferred_username</value>
+    </entry>
+  </refreshTokenResponseMaps>
+</pluginOAuthConfig>

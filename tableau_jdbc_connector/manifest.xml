@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<connector-plugin class="clickhouse_jdbc" min-version-tableau="2020.4" name="Altinity JDBC ClickHouse" plugin-version="1.4.1" superclass="jdbc" version="18.1">
+<connector-plugin class="clickhouse_jdbc" min-version-tableau="2023.3" name="Altinity JDBC ClickHouse" plugin-version="1.5.0" superclass="jdbc" version="18.1">
   <vendor-information>
       <company name="Altinity Inc" />
       <support-link url="https://altinity.com" />
       <driver-download-link url="https://github.com/ClickHouse/clickhouse-jdbc/releases" />
   </vendor-information>
-  <connection-customization class="clickhouse_jdbc" enabled="true" version="1.4.1">
+  <connection-customization class="clickhouse_jdbc" enabled="true" version="1.5.0">
     <vendor name="vendor" />
     <driver name="driver" />
     <customizations>
@@ -52,4 +52,5 @@
   <connection-metadata file="connectionMetadata.xml" />
   <connection-resolver file="connectionResolver.tdr" />
   <dialect file="dialect.tdd" />
+  <oauth-config file="null_config" />
 </connector-plugin>

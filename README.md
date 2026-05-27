@@ -9,7 +9,7 @@ The directions below assume you understand how ODBC/JDBC and Tableau connectors 
 * [The README from the ODBC driver\'s repo](https://github.com/ClickHouse/clickhouse-odbc?tab=readme-ov-file#odbc-driver-for-clickhouse--)
 
 ### Pre-Requisites for the JDBC version
-Before using the Altinity Tableau Connector for ClickHouse, you must install Tableau Desktop (or Server) version 2020.2 or above. Supported platforms are Windows, MacOS, and Linux.
+Before using the Altinity Tableau Connector for ClickHouse, you must install Tableau Desktop (or Server) version 2023.3 or above. Supported platforms are Windows, MacOS, and Linux.
 
 ### How to install the JDBC version with Tableau Dekstop
 1. Download the Clickhouse JDBC Driver from [the ClickHouse JDBC driver releases page](https://github.com/ClickHouse/clickhouse-jdbc/releases) and place the file in the following location based on your operating system:
@@ -47,8 +47,44 @@ Also check that Tableau has access to this directory. Here are sample commands f
 After the connector is successfully installed, open Tableau Desktop.
 
 1. You should see a new connection type - **Altinity JDBC for ClickHouse by Altinity Inc**.
-2. Enter your credentials in the dialog window.
+2. Select **Username and Password** or **Microsoft Entra ID OAuth** in the dialog window.
 3. Click "Sign in" and you should see the list of available databases.
+
+### Microsoft Entra ID OAuth for the JDBC version
+The JDBC connector supports Microsoft Entra ID OAuth through Tableau custom OAuth configuration. The connector does not embed tenant-specific OAuth values in the `.taco`; Tableau Desktop and Tableau Server administrators must provide a custom OAuth config for their Entra tenant.
+
+The connector requires a ClickHouse JDBC driver version that supports access token authentication with the `access_token` connection property.
+
+Create the following Microsoft Entra app registrations in the same tenant used by `authUri` and `tokenUri`:
+
+1. A resource/API app for ClickHouse. In **Expose an API**, set the Application ID URI, for example `api://<clickhouse-api-app-client-id>`, and add a delegated scope named `ClickHouse.Access`. Record the full scope string shown by Entra, for example `api://<clickhouse-api-app-client-id>/ClickHouse.Access`.
+2. A Desktop public/native client. Enable public client flows, configure loopback redirect `http://localhost`, and use authorization code flow with PKCE. Add the ClickHouse API delegated `ClickHouse.Access` permission to this client and grant consent, or pre-authorize this client from the resource/API app. Do not configure or distribute a client secret for Desktop.
+3. A Tableau Server confidential/web client. Configure redirect URI `https://<tableau-server-host>/auth/add_oauth_token` and create a client secret. Add the same ClickHouse API delegated `ClickHouse.Access` permission and grant admin consent.
+
+Copy `docs/ms-entra-oauthConfig.template.xml`, replace the placeholders, and install it as `custom_entra.xml`.
+
+Set `REPLACE_WITH_CLICKHOUSE_API_SCOPE` to the full delegated scope from the resource/API app, not to the Desktop or Server client ID. If Entra returns `AADSTS500011`, verify that the resource shown in the error, such as `api://...`, exactly matches the resource/API app's Application ID URI and that the authentication request is using the correct tenant.
+
+For Tableau Desktop:
+
+```bash
+mkdir -p "$HOME/Documents/My Tableau Repository/OAuthConfigs"
+cp docs/ms-entra-oauthConfig.template.xml "$HOME/Documents/My Tableau Repository/OAuthConfigs/custom_entra.xml"
+```
+
+For Tableau Server, either upload the custom OAuth config as a site-level OAuth client, or configure a server-level OAuth client with TSM:
+
+```bash
+export TABLEAU_SERVER_URL="https://tableau.example.com"
+export SERVER_CLIENT_ID="<entra-server-confidential-client-id>"
+read -rsp "Entra server client secret: " SERVER_CLIENT_SECRET; echo
+
+tsm configuration set -k oauth.config.clients -v "[{\"oauth.config.id\":\"clickhouse_jdbc:custom_entra\",\"oauth.config.client_id\":\"${SERVER_CLIENT_ID}\",\"oauth.config.client_secret\":\"${SERVER_CLIENT_SECRET}\",\"oauth.config.redirect_uri\":\"${TABLEAU_SERVER_URL}/auth/add_oauth_token\"}]" --force-keys
+tsm pending-changes apply --request-timeout 1800
+unset SERVER_CLIENT_SECRET
+```
+
+To support unattended extract refreshes and other Tableau Server tasks, the Entra scope list must include `offline_access`, and users must add the credential in Tableau Server under **My Account Settings** -> **Saved Credentials for Data Sources**. Workbooks and data sources can then be published with the saved OAuth credential embedded. Tableau REST API automation can authenticate to Tableau Server with a PAT and run refresh operations against content that uses the saved OAuth credential.
 
 
 ### Pre-Requisites for the ODBC version
