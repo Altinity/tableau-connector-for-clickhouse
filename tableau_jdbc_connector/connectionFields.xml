@@ -16,4 +16,11 @@
   <field name="v-timeout" label="Timeout (ms)" category="general" value-type="string" optional="true" >
     <validation-rule reg-exp="(^[0-9]+$|^$)"/>
   </field>
+  <field
+    name="v-session-parameters"
+    label="Session parameters"
+    placeholder="One per line or separated with commas, semicolons, or &amp;: log_comment=tableau"
+    value-type="textbox"
+    category="advanced"
+    optional="true" />
 </connection-fields>
